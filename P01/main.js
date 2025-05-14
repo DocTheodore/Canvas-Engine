@@ -2,11 +2,13 @@
 let cube;
 let cube2;
 
+let vel1 = 1;
+
 //Função de Inicialização
 function startGame() {
     gameArea.start();
-    cube = new Entity(32, 32, 300, 300, gameArea.ctx, '#0f4');
-    cube2 = new Entity(16, 16, 600, 300, gameArea.ctx, '#04f');
+    cube = new Entity(32, 32, 0, 288, gameArea.ctx, '#0f4');
+    cube2 = new Entity(16, 16, 640, 320, gameArea.ctx, '#04f');
     gameArea.update();
 }
 
@@ -23,13 +25,21 @@ const gameArea = {
         this.interval = setInterval(updateLoop, 1000/60);
     },
     clear : function() {
-        this.ctx.clearRect(0, 0, this.width, this.height);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
 
 startGame();
 function updateLoop(){
     gameArea.clear();
+
+    if(cube.x > gameArea.canvas.width) vel1 = -1;
+    if(cube.x < 0) vel1 = 1;
+    cube.x += vel1;
+
+
+    cube2.x -= .5;
+
     cube.Drawn();
     cube2.Drawn();
 }
