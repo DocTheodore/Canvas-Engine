@@ -8,11 +8,11 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 // Servir arquivos estáticos da pasta 'public'
-app.use(express.static('public'));
+app.use(express.static('client'));
 
 // Rota principal
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './public/index.html'));
+  res.sendFile(path.join(__dirname, './client/index.html'));
 });
 
 server.listen(3000, () => {
