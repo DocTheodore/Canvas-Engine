@@ -6,12 +6,12 @@ class Entity {
         this.color = color;
         this.vel = {x: 0, y: 0};
         this.speed = 1;
-
-        const ctx = GameScreen.ctx;
     }
     
     Drawn() {
+        const ctx = GameScreen.ctx;
         const tileSize = 32;
+        
         ctx.fillStyle = this.color || "#000";
         ctx.fillRect(this.pos.x, this.pos.y, this.size.x * tileSize, this.size.y * tileSize);
     }
