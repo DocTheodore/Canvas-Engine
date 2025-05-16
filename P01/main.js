@@ -1,8 +1,7 @@
 //Variaveis
-let cube;
-let cube2;
+let quit = false;
+let cubes = []
 
-let vel1 = 1;
 
 //Função de Inicialização
 function startGame() {
@@ -22,24 +21,38 @@ const gameArea = {
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     },
     update : function(){
-        this.interval = setInterval(updateLoop, 1000/60);
+        if(!quit) GameLoop();
     },
     clear : function() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
 
-startGame();
-function updateLoop(){
-    gameArea.clear();
+function GameLoop(currentTime){
+    const deltaTime = (currentTime - lastTime) / 1000;
+    lastTime = currentTime;
 
-    if(cube.x > gameArea.canvas.width) vel1 = -1;
-    if(cube.x < 0) vel1 = 1;
-    cube.x += vel1;
+    Update(deltaTime);
+    Render();
 
-
-    cube2.x -= .5;
-
-    cube.Drawn();
-    cube2.Drawn();
+    requestAnimationFrame(GameLoop);
 }
+
+
+function Update(dt){
+    
+}
+
+function Render(){
+
+}
+
+
+function quitGame(){
+    if(!quit) quit = true;
+    else {
+        quit = false;
+        startGame()
+    };
+}
+startGame();

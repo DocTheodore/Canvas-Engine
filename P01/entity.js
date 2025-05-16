@@ -1,16 +1,14 @@
 class Entity {
-    constructor(width, height, x, y, ctx, color = '#fff', behavior = []) {
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
+    constructor(context, size={w:1, h:1}, color="#000", position={x: 0, y: 0}) {
+        this.ctx = context;
+        this.size = size;
+        this.pos = position;
         this.color = color;
-        this.ctx = ctx;
-        this.behavior = behavior;
+        this.vel = {vx: 0, vy: 0};
     }
 
     Drawn() {
-        this.ctx.fillStyle = this.color || "#fff";
-        this.ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.ctx.fillStyle = this.color || "#000";
+        this.ctx.fillRect(this.pos.x, this.pos.y, this.size.w, this.size.h);
     }
 }
