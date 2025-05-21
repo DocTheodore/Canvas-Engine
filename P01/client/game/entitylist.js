@@ -1,11 +1,12 @@
 import Entity from "../core/entity.js";
 import f from "../shared/tupple.js";
+import GameScreen from "./GameScreen.js";
 
-export const getEntities = () => [
+export function getEntities(){ return [
     {
         name: 'Player',
         id: 1,
-        object: new Entity(f(2, 3), f(0, 0), "#0FE"),
+        object: new Entity(f(2, 3), GameScreen.center(2, 3), "#0FE"),
         Drawn: function() {
             return this.object.Drawn();
         },
@@ -14,3 +15,4 @@ export const getEntities = () => [
         }
     }
 ]
+}

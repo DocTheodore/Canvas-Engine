@@ -1,5 +1,4 @@
 import GameScreen from "./GameScreen.js";
-import Update from "../core/update.js";
 import Render from "../core/renderer.js";
 
 export default function Main(){
@@ -13,15 +12,14 @@ export default function Main(){
         requestAnimationFrame(gameLoop);
     }
 
-
     // Loop Principal do jogo
     let lastTime = 0;
     function gameLoop(currentTime) {
+        GameScreen.getInstance().clear();
         const deltaTime = (currentTime - lastTime) / 1000;
         lastTime = currentTime;
 
-        Update(deltaTime);
-        Render();
+        Render(deltaTime);
         
         requestAnimationFrame(gameLoop);
     }
