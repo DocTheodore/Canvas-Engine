@@ -22,7 +22,6 @@ export default class GameScreen {
 
     static center(x=0, y=0) {
         const tileSize = 16;
-        console.log(x, y);
         return {x:(Math.floor((GameScreen.width/2)+(x*tileSize/2))), y:(Math.floor((GameScreen.height/2)-(y*tileSize/2)))};
     }
 }
