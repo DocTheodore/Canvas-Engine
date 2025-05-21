@@ -1,7 +1,11 @@
 import GameScreen from "./GameScreen.js";
 import Render from "../core/renderer.js";
 import { entities } from "../core/renderer.js";
+import InputHandler from "../core/inputHandler.js";
 
+InputHandler.init();
+
+//Controle das entidades
 document.addEventListener("keydown", (event) => {
     const key = event.key;
     
@@ -17,6 +21,9 @@ document.addEventListener("keydown", (event) => {
         }
     }
 });
+
+const player = 0;
+
 
 export default function Main(){
     console.log('P01 Iniciado');

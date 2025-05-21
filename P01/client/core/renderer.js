@@ -23,7 +23,7 @@ export default function Render(dt){
     })
     entities.forEach((entity, i) => {
         entity = entity.object;
-        if(!entitiesDir[i]) entitiesDir[i] = f(coinflip(), coinflip());
+        if(!entitiesDir[i]) entitiesDir[i] = f(0, 0);
         //console.log(entity, entitiesDir[i]);
 
         if(entity.pos.x > GameScreen.width-entity.size.x*16 || entity.pos.x < 0) entitiesDir[i].x *= -1;
@@ -35,5 +35,5 @@ export default function Render(dt){
         entity.Drawn();
     })
 
-    console.log(Math.floor(timer));
+    //console.log(Math.floor(timer));
 }
