@@ -1,23 +1,35 @@
 const keys = {};
+const seenKeys = new Set();
 
 const InputHandler = {
     init() {
         document.addEventListener("keydown", (e) => {
-            keys[e.key.toLowerCase()] = true;
+            const key = e.key.toLowerCase();
+            keys[key] = true;
+            seenKeys.add(key);
         });
 
         document.addEventListener("keyup", (e) => {
-            keys[e.key.toLowerCase()] = false;
+            const key = e.key.toLowerCase();
+            keys[key] = false;
+            seenKeys.add(key);
         });
     },
 
     isPressed(key) {
-        console.log(key);
         return !!keys[key.toLowerCase()];
     },
 
     anyPressed(...keyList) {
         return keyList.some(k => keys[k.toLowerCase()]);
+    },
+
+    getPressedKeys() {
+        return Object.keys(keys).filter(k => keys[k]);
+    },
+
+    getUnpressedKeys() {
+        return Array.from(seenKeys).filter(k => !keys[k]);
     },
 
     getState() {

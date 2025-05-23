@@ -6,24 +6,16 @@ class Player extends Entity{
         super(size, position, color); 
     }
     
-    Movement(input, speed) {
+    Movement(input, speed=1) {
+        console.log(input);
         const direction = {x: 0, y: 0};
 
-        switch (input){
-            case 'w':
-                direction.y = -1;
-                break;
-            case 's':
-                direction.y = 1;
-                break;
-            case 'd':
-                direction.y = 1;
-                break;
-            case 'a':
-                direction.x = -1;
-                break;
-        }
-        this.ChangeVelocity(direction, speed? speed: this.speed);
+        if(input.includes("w") || !(input.includes("s"))) direction.y = -1;
+        if(input.includes("a") || !(input.includes("d"))) direction.x = -1;
+        if(input.includes("s") || !(input.includes("w"))) direction.y = 1;
+        if(input.includes("d") || !(input.includes("a"))) direction.x = 1;
+
+        this.ChangeVelocity(direction, speed);
     }
 }
 

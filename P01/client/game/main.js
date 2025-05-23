@@ -3,7 +3,8 @@ import Render from "../core/renderer.js";
 import { entities } from "../core/renderer.js";
 import InputHandler from "../core/inputHandler.js";
 
-InputHandler.init();
+const playerId = 0
+let player;
 
 //Controle das entidades
 document.addEventListener("keydown", (event) => {
@@ -22,8 +23,6 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-const player = 0;
-
 
 export default function Main(){
     console.log('P01 Iniciado');
@@ -32,8 +31,10 @@ export default function Main(){
 
     // Inicialização de componentes
     function gameStart() {
-
+        InputHandler.init();
         requestAnimationFrame(gameLoop);
+
+        console.log(player);
     }
 
     // Loop Principal do jogo
@@ -43,8 +44,13 @@ export default function Main(){
         const deltaTime = (currentTime - lastTime) / 1000;
         lastTime = currentTime;
 
+        if (player && player.Movement) {
+            player.Movement(InputHandler.getPressedKeys());
+        }
         Render(deltaTime);
         
+        if(!player) player = entities[playerId];
+        console.log(player);
         requestAnimationFrame(gameLoop);
     }
 

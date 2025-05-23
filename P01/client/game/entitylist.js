@@ -62,7 +62,7 @@ export function getEntities(){ return [
     {
         name: 'P5',
         id: 5,
-        object: new Player(f(2, 3), GameScreen.center(0, 0), "#F0F"),
+        object: new Player(f(2, 3), GameScreen.center(0, 0), "#0FE"),
         Drawn: function() {
             return this.object.Drawn();
         },
@@ -73,7 +73,7 @@ export function getEntities(){ return [
     {
         name: 'P6',
         id: 6,
-        object: new Player(f(2, 3), GameScreen.center(0, 8), "#0FE"),
+        object: new Player(f(2, 3), GameScreen.center(0, 8), "#00F"),
         Drawn: function() {
             return this.object.Drawn();
         },
@@ -84,7 +84,7 @@ export function getEntities(){ return [
     {
         name: 'P7',
         id: 7,
-        object: new Player(f(2, 3), GameScreen.center(8, -8), "#00F"),
+        object: new Player(f(2, 3), GameScreen.center(8, -8), "#A0F"),
         Drawn: function() {
             return this.object.Drawn();
         },
@@ -95,7 +95,7 @@ export function getEntities(){ return [
     {
         name: 'P8',
         id: 8,
-        object: new Player(f(2, 3), GameScreen.center(8, 0), "#90F"),
+        object: new Player(f(2, 3), GameScreen.center(8, 0), "#F0D"),
         Drawn: function() {
             return this.object.Drawn();
         },
@@ -106,7 +106,7 @@ export function getEntities(){ return [
     {
         name: 'P9',
         id: 9,
-        object: new Player(f(2, 3), GameScreen.center(8, 8), "#DDD"),
+        object: new Player(f(2, 3), GameScreen.center(8, 8), "#F05"),
         Drawn: function() {
             return this.object.Drawn();
         },
