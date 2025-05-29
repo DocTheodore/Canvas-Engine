@@ -3,6 +3,7 @@ const seenKeys = new Set();
 
 const InputHandler = {
     init() {
+        console.log("Input iniciado: ");
         document.addEventListener("keydown", (e) => {
             const key = e.key.toLowerCase();
             keys[key] = true;

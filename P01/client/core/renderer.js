@@ -18,22 +18,26 @@ export default function Render(dt){
     if(!tiles.length) getTiles(tiles);
     if (!entities.length) entities.push(...getEntities());
 
-    tiles.forEach(tile => {
-        tile.Drawn();
-    })
+    // Update ============================================
     entities.forEach((entity, i) => {
         entity = entity.object;
+        entitiesDir[i] = entity.vel;
         if(!entitiesDir[i]) entitiesDir[i] = f(0, 0);
         //console.log(entity, entitiesDir[i]);
-
-        if(entity.pos.x > GameScreen.width-entity.size.x*16 || entity.pos.x < 0) entitiesDir[i].x *= -1;
-        if(entity.pos.y > GameScreen.height-entity.size.y*16 || entity.pos.y < 0) entitiesDir[i].y *= -1;
         
-        entity.ChangeVelocity(entitiesDir[i], 64);
-
+        if(i === 0){
+            tiles.forEach(tile => {
+                entity.CheckColision(tile);
+            })
+        }
+        
+        entity.ChangeVelocity(entitiesDir[i], 8);
         entity.Update(dt);
-        entity.Drawn();
     })
+
+    // Drawn =============================================
+    tiles.forEach(tile => tile.Drawn());
+    entities.forEach(entity => entity.object.Drawn());
 
     //console.log(Math.floor(timer));
 }

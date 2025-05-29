@@ -6,6 +6,8 @@ import InputHandler from "../core/inputHandler.js";
 const playerId = 0
 let player;
 
+InputHandler.init();
+
 //Controle das entidades
 document.addEventListener("keydown", (event) => {
     const key = event.key;
@@ -25,7 +27,7 @@ document.addEventListener("keydown", (event) => {
 
 
 export default function Main(){
-    console.log('P01 Iniciado');
+    console.log(`P${playerId} iniciado`);
     // Variaveis Iniciais
     const game = GameScreen.getInstance();
 
@@ -33,8 +35,6 @@ export default function Main(){
     function gameStart() {
         InputHandler.init();
         requestAnimationFrame(gameLoop);
-
-        console.log(player);
     }
 
     // Loop Principal do jogo
@@ -45,12 +45,19 @@ export default function Main(){
         lastTime = currentTime;
 
         if (player && player.Movement) {
-            player.Movement(InputHandler.getPressedKeys());
+            player.Movement(InputHandler.getPressedKeys(), 16);
+            if(player.vel.x !== 0 || player.vel.y !== 0){
+                //console.log("Pos:", player.pos, " Vel:", player.vel);
+                //console.log("main: ", player);
+            }
         }
         Render(deltaTime);
         
-        if(!player) player = entities[playerId];
-        console.log(player);
+        if(!player){
+            player = entities[playerId].object;
+            console.log(player);
+        }
+        
         requestAnimationFrame(gameLoop);
     }
 
