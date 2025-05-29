@@ -9,29 +9,27 @@ const tiles = [];
 export const entities = [];
 const entitiesDir = [];
 
-function coinflip() {
-    return Math.floor(Math.random()*2)===0? 1: -1;
-}
-
 export default function Render(dt){
     timer += dt;
+
+    GameScreen.getInstance().clear();
+
     if(!tiles.length) getTiles(tiles);
     if (!entities.length) entities.push(...getEntities());
 
     // Update ============================================
     entities.forEach((entity, i) => {
         entity = entity.object;
-        entitiesDir[i] = entity.vel;
-        if(!entitiesDir[i]) entitiesDir[i] = f(0, 0);
-        //console.log(entity, entitiesDir[i]);
+
         
         if(i === 0){
+            entity.ChangeVelocity();
             tiles.forEach(tile => {
                 entity.CheckColision(tile);
             })
+            console.log(entity.pos);
         }
-        
-        entity.ChangeVelocity(entitiesDir[i], 8);
+
         entity.Update(dt);
     })
 

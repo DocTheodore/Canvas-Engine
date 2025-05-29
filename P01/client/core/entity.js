@@ -12,6 +12,7 @@ class Entity {
         this.color = color;
 
         this.vel = {x: 0, y: 0};
+        this.dir = {x: 0, y: 0};
         this.speed = 1;
 
         this.colisions = {
@@ -31,10 +32,10 @@ class Entity {
         ctx.fillStyle = this.color || "#000";
 
         ctx.fillRect(
-            Math.floor(this.pos.x),
-            Math.floor(this.pos.y),
-            Math.floor(this.size.x),
-            Math.floor(this.size.y)
+            Math.round(this.pos.x),
+            Math.round(this.pos.y),
+            Math.round(this.size.x),
+            Math.round(this.size.y)
         );
         //console.log(this);
     }
@@ -44,13 +45,12 @@ class Entity {
         const b = target.side;
 
         const isColliding = (
-            a.right > b.left &&
-            a.left < b.right &&
-            a.down > b.up &&
-            a.up < b.down
+            a.right >= b.left &&
+            a.left <= b.right &&
+            a.down >= b.up &&
+            a.up <= b.down
         );
 
-        // Zera os estados antigos
         const colisions = {
             right: false,
             left: false,
@@ -59,25 +59,37 @@ class Entity {
         };
 
         if (isColliding) {
-            // Direção da colisão simples com base em posição relativa
             const dx = (a.right + a.left) / 2 - (b.right + b.left) / 2;
             const dy = (a.down + a.up) / 2 - (b.down + b.up) / 2;
 
-            if (Math.abs(dx) > Math.abs(dy)) {
-                if (dx > 0) colisions.left = true;
-                else colisions.right = true;
-            } else {
-                if (dy > 0) colisions.up = true;
-                else colisions.down = true;
-            }
+            const overlapX = (a.right - a.left) / 2 + (b.right - b.left) / 2 - Math.abs(dx);
+            const overlapY = (a.down - a.up) / 2 + (b.down - b.up) / 2 - Math.abs(dy);
 
-            console.log(`Colisão detectada: ${JSON.stringify(colisions)}`);
+            if (overlapX < overlapY) {
+                if (dx > 0) {
+                    this.pos.x = this.pos.x + overlapX;
+                    colisions.left = true;
+                } else {
+                    this.pos.x = this.pos.x - overlapX;
+                    colisions.right = true;
+                }
+                //this.vel.x = 0;
+            } else {
+                if (dy > 0) {
+                    this.pos.y += overlapY;
+                    colisions.up = true;
+                } else {
+                    this.pos.y -= overlapY;
+                    colisions.down = true;
+                }
+                //this.vel.y = 0;
+            }
         }
 
         this.colisions = colisions;
     }
 
-    ChangeVelocity(direction={x: 0, y:0}, speed=this.speed) {
+    ChangeVelocity(direction=this.dir, speed=this.speed) {
         //console.log('direction:', direction, speed)
         this.vel.x = direction.x * speed;
         this.vel.y = direction.y * speed;

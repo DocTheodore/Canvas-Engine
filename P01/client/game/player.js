@@ -1,5 +1,6 @@
 import GameScreen from "../game/GameScreen.js";
 import Entity from "../core/entity.js";
+import { tileSize } from "../shared/size.js";
 
 class Player extends Entity{
     constructor(size = {x: 1, y: 1}, position = {x: 0, y: 0}, color = "#00f") {
@@ -15,7 +16,8 @@ class Player extends Entity{
         if(input.includes("d") && !(input.includes("a")) && !this.colisions.right) direction.x = 1;
 
         //if(direction.x !== 0 || direction.y !== 0) console.log(input, speed, direction);
-        this.ChangeVelocity(direction, speed);
+        this.dir = direction;
+        this.speed = speed * tileSize;
     }
 }
 

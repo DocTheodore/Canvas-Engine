@@ -40,12 +40,11 @@ export default function Main(){
     // Loop Principal do jogo
     let lastTime = 0;
     function gameLoop(currentTime) {
-        GameScreen.getInstance().clear();
         const deltaTime = (currentTime - lastTime) / 1000;
         lastTime = currentTime;
 
         if (player && player.Movement) {
-            player.Movement(InputHandler.getPressedKeys(), 16);
+            player.Movement(InputHandler.getPressedKeys(), 10);
             if(player.vel.x !== 0 || player.vel.y !== 0){
                 //console.log("Pos:", player.pos, " Vel:", player.vel);
                 //console.log("main: ", player);
