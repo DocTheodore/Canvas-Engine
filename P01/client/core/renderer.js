@@ -1,4 +1,4 @@
-import Entity from "./entity.js"
+import Entity from "./entityOld.js"
 import f from "../shared/tupple.js";
 import GameScreen from "../game/GameScreen.js";
 import getTiles from "../game/tilelist.js";

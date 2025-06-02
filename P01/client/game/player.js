@@ -1,5 +1,5 @@
 import GameScreen from "../game/GameScreen.js";
-import Entity from "../core/entity.js";
+import Entity from "../core/entityOld.js";
 import { tileSize } from "../shared/size.js";
 
 class Player extends Entity{
