@@ -29,7 +29,8 @@ export default class Entity {
 
         // Tamanho
         this.width = 0;
-        this.heigth = 0;
+        this.height = 0;
+        this.shape = '';
 
         // Peso
         this.mass = 1;
@@ -52,10 +53,10 @@ export default class Entity {
 
     // DISTANCIA
     distance(other){
-        return this.center.sub(other).magn(true);
+        return this.center.sub(other).magn();
     }
     distanceSQ(other){
-        return this.center.sub(other).magn(false);
+        return this.center.sub(other).magnSQ();
     }
 
     // DIREÇÃO
@@ -75,26 +76,26 @@ export default class Entity {
     // Propriedades calculadas (get/set)
     // CENTER
     get center(){
-        return new Vector(this.pos.x + this.width / 2, this.pos.y + this.heigth / 2);
+        return new Vector(this.pos.x + this.width / 2, this.pos.y + this.height / 2);
     }
     set center(value) {
-        this.pos = new Vector(value.x - this.width / 2, value.y - this.heigth / 2);
+        this.pos = new Vector(value.x - this.width / 2, value.y - this.height / 2);
     }
 
     // LEFT
     get left(){
-        return new Vector(this.pos.x, this.pos.y + this.heigth / 2);
+        return new Vector(this.pos.x, this.pos.y + this.height / 2);
     }
     set left(value){
-        this.pos = new Vector(value.x, value.y - this.heigth / 2);
+        this.pos = new Vector(value.x, value.y - this.height / 2);
     }
 
     // RIGHT
-    get rigth(){
-        return new Vector(this.pos.x + this.width, this.pos.y + this.heigth / 2);
+    get right(){
+        return new Vector(this.pos.x + this.width, this.pos.y + this.height / 2);
     }
-    set rigth(value){
-        this.pos = new Vector(value.x - this.width, value.y - this.heigth / 2);
+    set right(value){
+        this.pos = new Vector(value.x - this.width, value.y - this.height / 2);
     }
 
     // TOP
@@ -123,44 +124,48 @@ export default class Entity {
 
     // BOTTOM
     get bottom(){
-        return new Vector(this.pos.x + this.width / 2, this.pos.y + this.heigth);
+        return new Vector(this.pos.x + this.width / 2, this.pos.y + this.height);
     }
     set bottom(value){
-        this.pos = new Vector(value.x - this.width / 2, value.y - this.heigth);
+        this.pos = new Vector(value.x - this.width / 2, value.y - this.height);
     }
 
     // BOTTOM-LEFT
     get bottomLeft(){
-        return new Vector(this.pos.x, this.pos.y + this.heigth);
+        return new Vector(this.pos.x, this.pos.y + this.height);
     }
     set bottomLeft(value){
-        this.pos = new Vector(value.x, value.y - this.heigth);
+        this.pos = new Vector(value.x, value.y - this.height);
     }
 
-    // BOTTOM-RIGTH
-    get bottomRigth(){
-        return new Vector(this.pos.x + this.width, this.pos.y + this.heigth);
+    // BOTTOM-RIGHT
+    get bottomRight(){
+        return new Vector(this.pos.x + this.width, this.pos.y + this.height);
     }
-    set bottomRigth(value){
-        this.pos = new Vector(value.x - this.width, value.y - this.heigth);
+    set bottomRight(value){
+        this.pos = new Vector(value.x - this.width, value.y - this.height);
     }
 
     // SIZE
     get size(){
-        return new Vector(this.width, this.heigth);
+        return new Vector(this.width, this.height);
     }
     set size(value){
         this.width = value.x;
-        this.heigth = value.y;
+        this.height = value.y;
     }
 
     // HITBOX
     get hitbox(){
-        return new AABB(this.pos.clone(), this.pos.add(this.size()));
+        if(this.shape === 'Rect') 
+            return new AABB(this.pos.clone(), this.pos.add(this.size));
+        else if(this.shape === 'Circle') 
+            return new Circle(this.pos.clone(), Math.max(this.width / 2, this.height / 2));
+        else return
     }
     set hitbox(value){
         this.pos = new Vector(value.min.x, value.min.y);
         this.width = value.max.x - value.min.x;
-        this.heigth = value.max.y - value.min.y;
+        this.height = value.max.y - value.min.y;
     }
 }

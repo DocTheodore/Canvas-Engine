@@ -1,0 +1,10 @@
+Organização futura:
+
+src/
+├── core/         ← Loop, timing, camera, scenes
+├── entities/     ← Player, Enemy, Platform
+├── physics/
+│   ├── shapes/
+│   └── collisions.js
+├── rendering/    ← Canvas abstractions
+├── shared/       ← Vector, helpers, math utils
