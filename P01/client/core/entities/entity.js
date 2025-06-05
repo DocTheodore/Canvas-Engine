@@ -1,15 +1,7 @@
-import Vector from "../shared/vector";
-import AABB from "./physics/shapes/AABB";
+import Vector from "../../shared/vector";
+import AABB from "../physics/shapes/AABB";
 
 export default class Entity {
-
-    /*
-    Nova classe entity
-    mass = massa da entidade
-    inv = 1 / mass
-    vel = Vector do vel
-    res = ???
-    */
 
     constructor() {
         if(new.target === Entity){
@@ -164,8 +156,23 @@ export default class Entity {
         else return
     }
     set hitbox(value){
+        if(value instanceof AABB){
+            this.pos = value.min.clone();
+            this.size = value.size;
+        }
+
+
         this.pos = new Vector(value.min.x, value.min.y);
         this.width = value.max.x - value.min.x;
         this.height = value.max.y - value.min.y;
+    }
+
+    // MASS
+    get mass(){
+        return this.mass;
+    }
+    set mass(value){
+        this.mass = value;
+        this.inv = 1 / (this.mass ?? 1);
     }
 }

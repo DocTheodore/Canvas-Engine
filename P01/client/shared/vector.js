@@ -7,7 +7,7 @@ export default class Vector {
 
     // Retorna o Vetor em string
     toString() {
-        return `(${this.x}x, ${this.y}y)`;
+        return `(${this.x}, ${this.y})`;
     }
 
     // Copia este Vetor
@@ -106,5 +106,19 @@ export default class Vector {
             Math.abs(this.x - other.x) < tolerance &&
             Math.abs(this.y - other.y) < tolerance
         );
+    }
+
+    // Metodos Estaticos
+    static get zero() {
+        return new Vector(0, 0);
+    }
+
+    static fromAngle(angle) {
+        return new Vector(Math.cos(angle), Math.sin(angle));
+    }
+
+    static fromDegrees(angleDeg) {
+        const rad = angleDeg * (Math.PI / 180);
+        return Vector.fromAngle(rad);
     }
 }
