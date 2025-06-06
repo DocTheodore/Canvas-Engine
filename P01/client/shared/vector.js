@@ -1,9 +1,12 @@
+import { DEG2RAD } from "./utils.js";
+
 export default class Vector {
     constructor(x, y){
         if (!isFinite(x) || !isFinite(y)) throw new Error("Vetor inválido detectado");
         this.x = x;
         this.y = y;
     }
+
 
     // Retorna o Vetor em string
     toString() {
@@ -118,7 +121,7 @@ export default class Vector {
     }
 
     static fromDegrees(angleDeg) {
-        const rad = angleDeg * (Math.PI / 180);
+        const rad = angleDeg * DEG2RAD;
         return Vector.fromAngle(rad);
     }
 }

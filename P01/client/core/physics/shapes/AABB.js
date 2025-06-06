@@ -1,50 +1,43 @@
-import Vector from "../../../shared/vector";
-import Shape from "./shape";
+import Vector from "../../../shared/vector.js";
+import Shape from "./shape.js";
 
-export default class AABB extends Shape{
-constructor(pos = Vector.zero, size = Vector.zero) {
-        super(pos); // Chama o construtor de Shape
+export default class AABB extends Shape {
+    constructor(pos = Vector.zero, size = Vector.zero) {
+        super(pos);
 
-        if (!(size instanceof Vector)) throw new Error("Argumento 'size' precisa ser um Vetor");
-        this.size = size.clone(); // Armazena como tamanho
+        if (!(size instanceof Vector)) {
+            throw new TypeError("AABB: 'size' deve ser um Vector.");
+        }
+
+        this.size = size.clone(); // armazena internamente
     }
 
-    // Posição
-    // MIN
+    // Posição mínima (canto superior esquerdo)
     get min() {
-        return this.pos;
+        return this.pos.clone();
     }
 
-    // MAX
+    // Posição máxima (canto inferior direito)
     get max() {
         return this.pos.add(this.size);
     }
 
-    // Tamanho
-    // WIDTH
+    // Largura
     get width() {
-        return this.max.x - this.min.x;
+        return this.size.x;
     }
     set width(value) {
-        this.max.x = this.min.x + value;
+        if (typeof value !== "number" || value < 0) throw new Error("Largura inválida.");
+        this.size.x = value;
     }
 
-    // HEIGHT
+    // Altura
     get height() {
-        return this.max.y - this.min.y;
+        return this.size.y;
     }
     set height(value) {
-        this.max.y = this.min.y + value;
+        if (typeof value !== "number" || value < 0) throw new Error("Altura inválida.");
+        this.size.y = value;
     }
 
-    // SIZE
-    get size() {
-        return new Vector(this.width, this.height);
-    }
-    set size(value) {
-        if (!(value instanceof Vector)) throw new Error("Argumento precisa ser um Vetor");
-        this.width = value.x;
-        this.height = value.y;
-    }
-    
 }

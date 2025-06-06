@@ -1,7 +1,58 @@
-import Vector from "../../shared/vector";
-import AABB from "../physics/shapes/AABB";
-
 export default class Entity {
+    static _id = 0; // ID unico, compartilhado entre todas as entidades do sistema
+
+    constructor(name = '') {
+        Entity._id++;
+        this.id = Entity._id;
+        this.sys_name = String(name);
+        this.components = new Map();
+    }
+
+    toString() {
+        return `Entity(id: ${this.id}, sys_name: ${this.sys_name})`;
+    }
+
+    // Adicionar um novo componente dentro da entidade
+    addComponent(component) {
+        if (!(component && component.constructor)) {
+            throw new Error('Componente inválido');
+        }
+        const componentName = component.constructor.name;
+        this.components.set(componentName, component);
+    }
+
+    // Pega um componente especifico pelo nome
+    getComponent(componentName) {
+        const component = this.components.get(componentName);
+        if (!component) {
+            console.log(`Componente ${componentName} não encontrado na entidade.`);
+            return null;
+        }
+        return component;
+    }
+
+    // Verifica se um componente especifico existe
+    hasComponent(componentName) {
+        return this.components.has(componentName);
+    }
+
+    // Tira um componente desta entidade
+    removeComponent(componentName) {
+        if (this.components.has(componentName)) {
+            this.components.delete(componentName);
+            return true;  // Retorna `true` se a remoção foi bem-sucedida
+        }
+        return false;  // Retorna `false` se o componente não foi encontrado
+    }
+
+    // Remover todos os componentes
+    removeAllComponents(){
+        this.components.clear();
+    }
+
+}
+
+/* export default class _Entity {
 
     constructor() {
         if(new.target === Entity){
@@ -175,4 +226,4 @@ export default class Entity {
         this.mass = value;
         this.inv = 1 / (this.mass ?? 1);
     }
-}
+} */

@@ -27,7 +27,7 @@ export default function Render(dt){
             tiles.forEach(tile => {
                 entity.CheckColision(tile);
             })
-            console.log(entity.pos);
+            //console.log(entity.pos);
         }
 
         entity.Update(dt);

@@ -2,6 +2,7 @@ import GameScreen from "./GameScreen.js";
 import Render from "../core/renderer.js";
 import { entities } from "../core/renderer.js";
 import InputHandler from "../core/inputHandler.js";
+import Vector from "../shared/vector.js";
 
 const playerId = 0
 let player;
