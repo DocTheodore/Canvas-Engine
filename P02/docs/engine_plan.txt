@@ -1,0 +1,63 @@
+/my-game-engine
+├── /assets
+│   ├── /images
+│   ├── /audio
+│   ├── /fonts
+│   ├── /animations
+│   ├── /spritesheets
+│   └── /tilesets
+├── /docs
+│   └── engine-design.md
+├── /engine
+│   ├── /core
+│   │   ├── graphics.js      # Sistema de renderização
+│   │   ├── physics.js       # Física e colisões
+│   │   ├── input.js         # Entrada de usuário (teclado, mouse, etc)
+│   │   ├── entity.js        # Sistema de entidades e componentes
+│   │   ├── world.js         # Mapa, chunks e terrenos
+│   │   ├── network.js       # Sistema de rede
+│   │   └── audio.js         # Sistema de áudio
+│   ├── /utils
+│   │   ├── math.js          # Funções matemáticas auxiliares (ex: Perlin Noise, etc)
+│   │   ├── logger.js        # Log de erros e debug
+│   │   └── helper.js        # Funções gerais de utilidade
+│   ├── /systems
+│   │   ├── renderSystem.js  # Responsável por renderizar objetos
+│   │   ├── physicsSystem.js # Responsável pela física
+│   │   └── networkSystem.js # Sincronização de rede
+│   ├── /components
+│   │   ├── position.js      # Componente de posição
+│   │   ├── velocity.js      # Componente de velocidade
+│   │   ├── sprite.js        # Componente de sprite (gráfico)
+│   │   └── health.js        # Componente de saúde
+│   └── /services
+│       ├── socketService.js # Serviço de comunicação via WebSockets
+│       ├── fileService.js   # Carregamento de arquivos (imagens, sons, etc)
+│       └── assetService.js  # Gerenciamento de assets
+├── /src
+│   ├── /scenes
+│   │   ├── mainMenu.js      # Cena do menu principal
+│   │   ├── game.js          # Cena principal do jogo
+│   │   └── pauseMenu.js     # Cena do menu de pausa
+│   ├── /entities
+│   │   ├── player.js        # Entidade do jogador
+│   │   ├── enemy.js         # Entidade inimiga
+│   │   └── npc.js           # Entidade NPC
+│   ├── /ui
+│   │   ├── button.js        # Componente de botão UI
+│   │   ├── scoreDisplay.js  # Componente de exibição de placar
+│   │   └── inventory.js     # Componente de inventário
+├── /tests
+│   ├── graphics.test.js
+│   ├── physics.test.js
+│   ├── network.test.js
+│   └── entity.test.js
+├── /dist
+│   ├── index.html
+│   ├── game.js
+│   └── style.css
+├── /config
+│   ├── settings.js
+│   └── constants.js
+├── package.json
+└── README.md
