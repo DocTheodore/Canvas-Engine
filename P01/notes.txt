@@ -8,3 +8,18 @@ src/
 │   └── collisions.js
 ├── rendering/    ← Canvas abstractions
 ├── shared/       ← Vector, helpers, math utils
+
+//////////////////////////////////////////////////
+
+P01/
+    ../client
+        ../assets
+            ../audio
+            ../misc
+            ../sprite
+        ../core
+        ../game
+        ../shared
+        ../ui
+    index.js
+    index.html
