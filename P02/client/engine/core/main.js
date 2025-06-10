@@ -1,3 +1,5 @@
+import { gameScreen } from '../../shared/config/window.js';
+
 export function main() {
-    alert("Olá mundo");
+    console.log(gameScreen);
 }
