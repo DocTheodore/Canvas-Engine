@@ -1,4 +1,4 @@
-import { DEG2RAD } from "./const.js";
+import { DEG2RAD } from "./sys_var.js";
 
 export default class Vector {
     constructor(x, y){
@@ -6,7 +6,6 @@ export default class Vector {
         this.x = x;
         this.y = y;
     }
-
 
     // Retorna o Vetor em string
     toString() {

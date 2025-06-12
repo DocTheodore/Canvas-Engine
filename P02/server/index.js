@@ -13,7 +13,7 @@ app.use(express.static('client'));
 
 // Rota principal
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 server.listen(3000, () => {
