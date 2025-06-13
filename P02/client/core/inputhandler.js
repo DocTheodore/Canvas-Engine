@@ -1,4 +1,5 @@
-import Vector from "../shared/vector";
+import { TILE_PX } from "../shared/sys_var.js";
+import Vector from "../shared/vector.js";
 
 class InputHandler {
     constructor() {
@@ -76,10 +77,13 @@ class InputHandler {
 
     // Mouse Functions
     getMousePos() {
-        return this.mouse.pos;
+        return this.mouse.pos.clone();
     }
     getFixedMousePos() {
-        return this.mouse.pos.clone();
+        return new Vector(
+            Math.floor(this.mouse.pos.x / TILE_PX) * TILE_PX,
+            Math.floor(this.mouse.pos.y / TILE_PX) * TILE_PX,
+        );
     }
     isMouseDown(button = 0) {
         return !!this.mouse.buttons[button];

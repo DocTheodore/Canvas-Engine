@@ -1,13 +1,82 @@
 import { gameScreen } from "../config/game_screen.js";
+import inputHandler from "./inputhandler.js";
+import keymap from "../config/keymap.js";
+import { debbugFps } from "../game.js";
+import { socket, netdata } from "../netcode/network.js";
+import { TILE_PX } from "../shared/sys_var.js";
+import Colors from "../shared/colors.js";
 
-export default function Main(){
+const canvas = document.getElementById("GameScreen");
+canvas.width = gameScreen.size.x;
+canvas.height = gameScreen.size.y;
+const ctx = canvas.getContext("2d");
+
+export default function Main() {
     console.log("Iniciando [SideStory]");
+    Setup();
 
-    gameStart();
+
+    // Variaveis
+    let lastTime = performance.now();
+    let fps = { show : 0, count: 0 };
+
+    Start();
+    // Loop Principal
+    function gameLoop(now){     
+        const deltaTime = (now - lastTime) / 1000;
+        fps.count = 1 / deltaTime;
+        lastTime = now;
+
+        Update(deltaTime);
+        lateUpdate(deltaTime);
+        Render();
+
+        requestAnimationFrame(gameLoop);
+    }
+
+    // Funções da engine
+    function Setup() {
+        setInterval(function() {
+            fps.show = Math.round(fps.count);
+        }, 1000);
+    }
+
+    function Start() {
+        console.log("SIZE: ", gameScreen.size);
+        console.log("TILES: ", gameScreen.tiles);
+        console.log("CENTER: ", gameScreen.center);
+    }
+
+    function Update(dt) {
+        if(inputHandler.wasTapped(keymap.jump)){ // Teste de Tecla
+            console.log("Pulo pressionado!");
+        }
+
+        if(inputHandler.wasMouseClicked()) { // Teste de Mouse
+            const pos = inputHandler.getFixedMousePos();
+            console.log("Mouse: ", pos);
+
+            socket.emit('spawnTile', pos);
+        }
+    }
+
+    function lateUpdate(dt) {
+        debbugFps.innerText = "FPS: " + fps.show;
+        inputHandler.lateUpdate(); // Reset do Input
+    }
+
+    function Render(){
+        clear();
+
+        for (const tile of netdata.tilesToRender) {
+            ctx.fillStyle = tile.color;
+            ctx.fillRect(tile.pos.x, tile.pos.y, TILE_PX, TILE_PX);
+        }
+    }
+
+    requestAnimationFrame(gameLoop); // Chamar o loop
 }
 
-function gameStart() {
-    console.log("SIZE: ", gameScreen.size);
-    console.log("TILES: ", gameScreen.tiles);
-    console.log("CENTER: ", gameScreen.center);
+function clear(){
+    ctx.clearRect(0, 0, gameScreen.size.x, gameScreen.size.y);
 }
