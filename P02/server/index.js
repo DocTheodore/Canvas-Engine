@@ -7,6 +7,8 @@ import { fileURLToPath } from 'url';
 
 import Colors from '../client/shared/colors.js';
 import Vector from '../client/shared/vector.js';
+import SetupEvents from './events.js';
+import { GlobalTileMap } from './world/tilemap.js';
 
 // Simulando __dirname no ESModules
 const __filename = fileURLToPath(import.meta.url);
@@ -69,10 +71,14 @@ io.on('connection', (socket) => {
 
     console.log(`[Servidor] Jogador conectado: ${socket.id}, ID: ${newId}`);
     socket.emit('connectionSuccess', newId);
+
     io.emit('playerlog', players);
+    io.emit('mapState', GlobalTileMap.exportAllTiles());
+
+    SetupEvents(socket, io, players);
   } else {
     console.log('[Servidor] Conexão recusada: máximo de jogadores atingido');
-    socket.emit('severFull');
+    socket.emit('serverFull');
     socket.disconnect(true);
   }
 
@@ -90,13 +96,6 @@ io.on('connection', (socket) => {
     io.emit('playerlog', players);
   });
 
-  socket.on('spawnTile', (data) => {
-    console.log(`[Servidor] Tile clicado pelo Player Id: ${players[socket.id].playerId}`);
-    io.emit('renderTile', {
-      pos: data,
-      color: players[socket.id].colorId,
-    });
-  });
 });
 
 server.listen(3000, () => {

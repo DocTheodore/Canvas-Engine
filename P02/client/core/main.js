@@ -4,7 +4,9 @@ import keymap from "../config/keymap.js";
 import { Debbug } from "../game.js";
 import { socket, netdata } from "../netcode/network.js";
 import { TILE_PX } from "../shared/sys_var.js";
+import { TileMap } from "./tilemap.js";
 import Colors from "../shared/colors.js";
+import Vector from "../shared/vector.js";
 
 const ctx = gameScreen.canvas.getContext("2d");
 
@@ -65,6 +67,8 @@ export default function Main() {
 
     function Render(){
         clear();
+
+        TileMap.render(ctx, Vector.zero);
 
         for (const tile of netdata.tilesToRender) {
             ctx.fillStyle = tile.color;

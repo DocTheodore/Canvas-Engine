@@ -3,6 +3,8 @@ export const netdata = {
     tilesToRender: [],
 }
 
+export const tileMap = new map();
+
 // Lidar com a conexão
 socket.on('connect', () => {
     console.log('[Cliente] Servidor encontrado');
@@ -21,6 +23,24 @@ socket.on('playerlog', (players) => {
 
 socket.on('renderTile', (info) => {
     console.log("[Client] Informação de tile recebida pelo servidor ");
+    netdata.tilesToRender.push({
+        pos: info.pos,
+        color: info.color,
+    });
+    console.log(netdata);
+})
+
+socket.on('mapState', (tiles) => {
+    console.log("[Client] Estado atual do Mapa recebido pelo servidor ");
+
+    tiles.forEach(tile => {
+        const key = `${tile.pos.x},${tile.pos.y}`;
+        tileMap.set(key, {
+            pos: tile.pos,
+            color: '#00ff00',
+        });
+    });
+
     netdata.tilesToRender.push({
         pos: info.pos,
         color: info.color,
