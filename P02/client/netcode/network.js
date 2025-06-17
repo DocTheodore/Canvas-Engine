@@ -20,13 +20,25 @@ socket.on('serverFull', () => {
     console.log('[Cliente] Conexão recusada, servidor lotado');
 });
 
-// Funções de evento
-socket.on('playerlog', (players) => {
+// ===============================
+// Eventos do Socket
+// ===============================
+
+socket.on('playerlog', (players) => { // Mostrar lista atualizada de players online no chat
     console.table(players);
 });
 
-socket.on('renderTile', (tile) => {
-    console.log("[Client] informação de tile recebida pelo servidor ");
+socket.on('renderTile', makeTile); // Renderizar um tile na tela
+
+socket.on('mapState', (tileData) => { // Renderizar todos os tiles vindos do servidor na tela
+    tileData.forEach(makeTile);
+})
+
+// ===============================
+// Funções de Lógica de dados
+// ===============================
+
+function makeTile(tile) { // Lógica de colocar um tile na lista de renderização
     const key = `${tile.pos.x},${tile.pos.y}`;
     const vectorPos = new Vector(tile.pos.x, tile.pos.y).scal(TILE_PX);
 
@@ -35,23 +47,4 @@ socket.on('renderTile', (tile) => {
         type: tile.type,
         color: tiles[tile.type],
     });
-    
-    console.log(netdata);
-})
-
-socket.on('mapState', (tileData) => {
-    console.log("[Client] Estado atual do Mapa recebido pelo servidor ");
-
-    tileData.forEach(tile => {
-        const key = `${tile.pos.x},${tile.pos.y}`;
-        const vectorPos = new Vector(tile.pos.x, tile.pos.y).scal(TILE_PX);
-
-        netdata.tileMap.set(key, {
-            pos: vectorPos,
-            type: tile.type,
-            color: tiles[tile.type],
-        });
-    });
-
-    console.log(netdata.tileMap);
-})
+}
