@@ -1,4 +1,5 @@
 import Colors from "../client/shared/colors.js";
+import { TILE_PX } from "../client/shared/sys_var.js";
 import Vector from "../client/shared/vector.js";
 import { GlobalTileMap } from "./world/tilemap.js";
 
@@ -7,7 +8,7 @@ export default function SetupEvents(socket, io, players) {
     socket.on('spawnTile', (data) => {
         //console.log(`[Servidor] Tile clicado pelo Player Id: ${players[socket.id].playerId}`);
         const { pos, type } = data;
-        const vectorPos = new Vector(pos.x, pos.y);
+        const vectorPos = new Vector(pos.x, pos.y).scalSelf(TILE_PX);
         GlobalTileMap.setTile(vectorPos, type);
 
         io.emit('renderTile', {

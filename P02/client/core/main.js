@@ -53,10 +53,10 @@ export default function Main() {
         }
 
         if(inputHandler.wasMouseClicked()) { // Teste de Mouse
-            const pos = inputHandler.getFixedMousePos();
+            const pos = inputHandler.getTileMousePos();
             console.log("Mouse: ", pos);
 
-            socket.emit('spawnTile', pos);
+            socket.emit('spawnTile', {pos, type:1});
         }
     }
 

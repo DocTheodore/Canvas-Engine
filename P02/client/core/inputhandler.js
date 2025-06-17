@@ -1,4 +1,4 @@
-import { TILE_PX } from "../shared/sys_var.js";
+import { TILE_DT, TILE_PX } from "../shared/sys_var.js";
 import Vector from "../shared/vector.js";
 
 class InputHandler {
@@ -76,14 +76,17 @@ class InputHandler {
     }
 
     // Mouse Functions
-    getMousePos() {
+    getMousePos() { // Mouse na tela
         return this.mouse.pos.clone();
     }
-    getFixedMousePos() {
+    getTileMousePos() { // Tile em cima do mouse
         return new Vector(
-            Math.floor(this.mouse.pos.x / TILE_PX) * TILE_PX,
-            Math.floor(this.mouse.pos.y / TILE_PX) * TILE_PX,
+            Math.floor(this.mouse.pos.x * TILE_DT),
+            Math.floor(this.mouse.pos.y * TILE_DT)
         );
+    }
+    getFixedMousePos() { // posição em Tile*Pixel 
+        return this.getTileMousePos().scal(TILE_PX);
     }
     isMouseDown(button = 0) {
         return !!this.mouse.buttons[button];

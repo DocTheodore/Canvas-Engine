@@ -13,7 +13,7 @@ class _GlobalTileMap {
     getIndex(pos=Vector.zero) {
         return pos.y * this.cols + pos.x;
     }
-
+    
     setTile(pos=Vector.zero, type=0) {
         const index = this.getIndex(pos);
         if(index >= 0 && index < this.tiles.length) {
@@ -21,7 +21,7 @@ class _GlobalTileMap {
         }
     }
 
-    getTile(pos) {
+    getTile(pos=Vector.zero) {
         const index = this.getIndex(pos);
         return this.tiles[index];
     }
@@ -31,12 +31,14 @@ class _GlobalTileMap {
         for(let y=0; y < this.rows; y++){
             for(let x=0; x < this.cols; x++) {
                 const index = y * this.cols + x;
-                const type = this.tiles[index];
+                const type = this.getTile(new Vector(x, y));
                 if(type !== 0){
+                    console.log("tile que foi mandado: ",{pos: {x, y}, type})
                     data.push({pos: {x, y}, type});
                 }
             }
         }
+        console.log(data);
         return data;
     }
 }

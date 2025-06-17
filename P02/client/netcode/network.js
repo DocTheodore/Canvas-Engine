@@ -3,7 +3,7 @@ export const netdata = {
     tilesToRender: [],
 }
 
-export const tileMap = new map();
+export const tileMap = new Map();
 
 // Lidar com a conexão
 socket.on('connect', () => {
@@ -41,9 +41,6 @@ socket.on('mapState', (tiles) => {
         });
     });
 
-    netdata.tilesToRender.push({
-        pos: info.pos,
-        color: info.color,
-    });
-    console.log(netdata);
+    console.log(tileMap);
+
 })
