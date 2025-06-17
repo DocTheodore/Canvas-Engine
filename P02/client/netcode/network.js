@@ -1,9 +1,10 @@
+import { TILE_PX } from "../shared/sys_var.js";
+import Vector from "../shared/vector.js";
+
 export const socket = io();
 export const netdata = {
-    tilesToRender: [],
+    tileMap: new Map(),
 }
-
-export const tileMap = new Map();
 
 // Lidar com a conexão
 socket.on('connect', () => {
@@ -21,12 +22,16 @@ socket.on('playerlog', (players) => {
     console.table(players);
 });
 
-socket.on('renderTile', (info) => {
-    console.log("[Client] Informação de tile recebida pelo servidor ");
-    netdata.tilesToRender.push({
-        pos: info.pos,
-        color: info.color,
+socket.on('renderTile', (tile) => {
+    console.log("[Client] informação de tile recebida pelo servidor ");
+    const key = `${tile.pos.x},${tile.pos.y}`;
+    const vectorPos = new Vector(tile.pos.x, tile.pos.y).scal(TILE_PX);
+
+    netdata.tileMap.set(key, {
+        pos: vectorPos,
+        color: '#00ff00',
     });
+    
     console.log(netdata);
 })
 
@@ -35,12 +40,13 @@ socket.on('mapState', (tiles) => {
 
     tiles.forEach(tile => {
         const key = `${tile.pos.x},${tile.pos.y}`;
-        tileMap.set(key, {
-            pos: tile.pos,
+        const vectorPos = new Vector(tile.pos.x, tile.pos.y).scal(TILE_PX);
+
+        netdata.tileMap.set(key, {
+            pos: vectorPos,
             color: '#00ff00',
         });
     });
 
-    console.log(tileMap);
-
+    console.log(netdata.tileMap);
 })

@@ -8,7 +8,7 @@ export default function SetupEvents(socket, io, players) {
     socket.on('spawnTile', (data) => {
         //console.log(`[Servidor] Tile clicado pelo Player Id: ${players[socket.id].playerId}`);
         const { pos, type } = data;
-        const vectorPos = new Vector(pos.x, pos.y).scalSelf(TILE_PX);
+        const vectorPos = new Vector(pos.x, pos.y);
         GlobalTileMap.setTile(vectorPos, type);
 
         io.emit('renderTile', {

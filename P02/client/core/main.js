@@ -70,10 +70,10 @@ export default function Main() {
 
         TileMap.render(ctx, Vector.zero);
 
-        for (const tile of netdata.tilesToRender) {
+        netdata.tileMap.forEach((tile) => {
             ctx.fillStyle = tile.color;
             ctx.fillRect(tile.pos.x, tile.pos.y, TILE_PX, TILE_PX);
-        }
+        })
     }
 
     requestAnimationFrame(gameLoop); // Chamar o loop

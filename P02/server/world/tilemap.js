@@ -34,11 +34,12 @@ class _GlobalTileMap {
                 const type = this.getTile(new Vector(x, y));
                 if(type !== 0){
                     console.log("tile que foi mandado: ",{pos: {x, y}, type})
-                    data.push({pos: {x, y}, type});
+                    data.push({pos: new Vector(x, y), type});
                 }
             }
         }
-        console.log(data);
+        
+        //console.log(data);
         return data;
     }
 }
