@@ -34,18 +34,6 @@ const MAX_PLAYERS = 20;
 const players = {};
 const idPool = Array.from({ length: MAX_PLAYERS }, (_, i) => i + 1);
 
-/*****/
-const idColor = [
-  Colors.black.rgb,
-  Colors.green.rgb, 
-  Colors.blue.rgb, 
-  Colors.red.rgb, 
-  Colors.fromHex("#FFFF00").rgb, 
-  Colors.fromHex("#00FFFF").rgb, 
-  Colors.fromHex("#FF00FF").rgb, 
-]
-/*****/
-
 function assignPlayerId() {
   return idPool.shift();
 }
@@ -66,14 +54,13 @@ io.on('connection', (socket) => {
     const newId = assignPlayerId();
     players[socket.id] = {
       playerId: newId,
-      colorId: idColor[newId%idColor.length]
     };
 
     console.log(`[Servidor] Jogador conectado: ${socket.id}, ID: ${newId}`);
     socket.emit('connectionSuccess', newId);
 
     io.emit('playerlog', players);
-    io.emit('mapState', GlobalTileMap.exportAllTiles());
+    socket.emit('mapState', GlobalTileMap.exportAllTiles());
 
     SetupEvents(socket, io, players);
   } else {

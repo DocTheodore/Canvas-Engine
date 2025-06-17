@@ -1,7 +1,7 @@
 import Vector from "../../client/shared/vector.js";
 
-const TILE_ROWS = 100;
-const TILE_COLS = 100;
+const TILE_ROWS = 150;
+const TILE_COLS = 150;
 
 class _GlobalTileMap {
     constructor(rows, cols) {

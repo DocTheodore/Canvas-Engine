@@ -13,7 +13,7 @@ export default function SetupEvents(socket, io, players) {
 
         io.emit('renderTile', {
             pos: pos,
-            color: Colors.green,
+            type: type,
         });
     });
 

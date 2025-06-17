@@ -56,7 +56,7 @@ export default function Main() {
             const pos = inputHandler.getTileMousePos();
             console.log("Mouse: ", pos);
 
-            socket.emit('spawnTile', {pos, type:1});
+            socket.emit('spawnTile', {pos, type:netdata.myId});
         }
     }
 
