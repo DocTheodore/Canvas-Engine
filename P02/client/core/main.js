@@ -58,6 +58,7 @@ export default function Main() {
 
         Camera.setLimit(WORLDSIZE_PX, WORLDSIZE_PY); 
         Camera.setFocus(view);
+        Camera.update(1);
     }
 
     function Update(dt) {

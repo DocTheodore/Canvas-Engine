@@ -47,7 +47,7 @@ class _Camera {
     }
 
     // Atualização da camera
-    update() {
+    update(snap = 0.2) {
         // Primeiro, aplicar o zoom e ajustar dimensões da câmera
         const scale = this.zoom || 1;
         this.w = gameScreen.size.x * scale;
@@ -58,8 +58,8 @@ class _Camera {
             const focusX = this.focus.x - this.w / 2;
             const focusY = this.focus.y - this.h / 2;
 
-            this.x += (focusX - this.x) * 0.1;
-            this.y += (focusY - this.y) * 0.1;
+            this.x += (focusX - this.x) * snap;
+            this.y += (focusY - this.y) * snap;
         }
 
         // Aplicar limites simétricos (com origem no centro)
