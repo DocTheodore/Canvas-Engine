@@ -1,4 +1,4 @@
-import { tiles } from "../core/tile.js";
+import Tile from "../core/tile.js";
 import { TILE_PX } from "../shared/sys_var.js";
 import Vector from "../shared/vector.js";
 
@@ -40,11 +40,10 @@ socket.on('mapState', (tileData) => { // Renderizar todos os tiles vindos do ser
 
 function makeTile(tile) { // Lógica de colocar um tile na lista de renderização
     const key = `${tile.pos.x},${tile.pos.y}`;
-    const vectorPos = new Vector(tile.pos.x, tile.pos.y).scal(TILE_PX);
+    const vectorPos = new Vector(tile.pos.x, tile.pos.y);
 
     netdata.tileMap.set(key, {
         pos: vectorPos,
-        type: tile.type,
-        color: tiles[tile.type],
+        tile: new Tile(tile.type),
     });
 }

@@ -10,6 +10,7 @@ export default function SetupEvents(socket, io, players) {
         const { pos, type } = data;
         const vectorPos = new Vector(pos.x, pos.y);
         GlobalTileMap.setTile(vectorPos, type);
+        console.log(vectorPos, type);
 
         io.emit('renderTile', {
             pos: pos,

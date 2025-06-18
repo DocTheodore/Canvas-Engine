@@ -1,5 +1,6 @@
 import { TILE_DT, TILE_PX } from "../shared/sys_var.js";
 import Vector from "../shared/vector.js";
+import Camera from "./camera.js";
 
 class InputHandler {
     constructor() {
@@ -76,6 +77,7 @@ class InputHandler {
     }
 
     // Mouse Functions
+    // Posição do Mouse
     getMousePos() { // Mouse na tela
         return this.mouse.pos.clone();
     }
@@ -88,6 +90,14 @@ class InputHandler {
     getFixedMousePos() { // posição em Tile*Pixel 
         return this.getTileMousePos().scal(TILE_PX);
     }
+    getWorldMousePos() {
+        const worldPos = this.worldPosition();
+        return new Vector(
+            Math.floor(worldPos.x * TILE_DT),
+            Math.floor(worldPos.y * TILE_DT)       
+        )
+    }
+    // Ações do Mouse
     isMouseDown(button = 0) {
         return !!this.mouse.buttons[button];
     }
@@ -110,6 +120,16 @@ class InputHandler {
         this.keyUp = {};
         this.mouse.buttonDown = {};
         this.mouse.buttonUp = {};
+    }
+
+    worldPosition() {
+        const x = this.mouse.pos.x;
+        const y = this.mouse.pos.y;
+
+        const worldX = x / Camera.zoom + Camera.x;
+        const worldY = y / Camera.zoom + Camera.y;
+
+        return new Vector(worldX, worldY);
     }
 }
 

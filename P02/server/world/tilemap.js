@@ -1,47 +1,38 @@
 import Vector from "../../client/shared/vector.js";
 
-const TILE_ROWS = 150;
-const TILE_COLS = 150;
-
 class _GlobalTileMap {
-    constructor(rows, cols) {
-        this.rows = rows;
-        this.cols = cols;
-        this.tiles = new Array(cols * rows).fill(0);
+    constructor () {
+        this.tiles = new Map();
     }
 
-    getIndex(pos=Vector.zero) {
-        return pos.y * this.cols + pos.x;
+    _key(pos = Vector.zero) {
+        return `${pos.x},${pos.y}`;
     }
-    
+
     setTile(pos=Vector.zero, type=0) {
-        const index = this.getIndex(pos);
-        if(index >= 0 && index < this.tiles.length) {
-            this.tiles[index] = type;
+        const key = this._key(pos);
+        if(type === 0) {
+            this.tiles.delete(key);
+        } else {
+            this.tiles.set(key, type);
         }
     }
 
     getTile(pos=Vector.zero) {
-        const index = this.getIndex(pos);
-        return this.tiles[index];
+        const key = this._key(pos);
+        return this.tiles.get(key) || 0;
     }
 
     exportAllTiles() {
         const data = [];
-        for(let y=0; y < this.rows; y++){
-            for(let x=0; x < this.cols; x++) {
-                const index = y * this.cols + x;
-                const type = this.getTile(new Vector(x, y));
-                if(type !== 0){
-                    console.log("tile que foi mandado: ",{pos: {x, y}, type})
-                    data.push({pos: new Vector(x, y), type});
-                }
-            }
+        for (const [key, type] of this.tiles.entries()) {
+            const [x, y] = key.split(',').map(Number);
+            data.push({pos: new Vector(x, y), type});
         }
-        
-        //console.log(data);
+        console.log(data);
         return data;
     }
+
 }
 
-export const GlobalTileMap = new _GlobalTileMap(TILE_ROWS, TILE_COLS);
+export const GlobalTileMap = new _GlobalTileMap();

@@ -25,7 +25,7 @@ canvas.width = size.x;
 canvas.height = size.y;
 
 // Redimensionar tela
-function Sizing(ctx) {
+function Sizing(ctx, Camera) {
     if(size.x === window.innerWidth && size.y === window.innerHeight) return // Se o tamanho for o igual, ignorar função
 
     size = new Vector(
