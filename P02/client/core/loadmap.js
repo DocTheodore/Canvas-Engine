@@ -7,12 +7,68 @@ import Tile from "./tile.js";
 const CHUNK_SIZE = 50;
 const CHUNK_F = 1 / CHUNK_SIZE;
 
-class _LoadMap {
-    constructor() {
-        this.tiles = new Map();
+class Chunk {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.tiles = new map();
     }
 
-    _key(pos=Vector.zero) {
+    get pos() {
+        return new Vector(this.x, this.y);
+    }
+    set pos(v=Vector.zero) {
+        this.x = v.x;
+        this.y = v.y;
+    }
+
+    _key (pos=Vector.zero) {
+        return `${pos.x},${pos.y}`;
+    }
+
+    setTile(localPos=Vector.zero, tile) {
+        const key = this._key(localPos);
+        this.tiles.set(key, tile);
+    }
+
+    getTile(localPos) {
+        const key = this_key(localPos);
+        return this.tiles.get(key) || null;
+    }
+}
+
+class _LoadMap {
+    constructor() {
+        this.chunks = new Map();
+    }
+
+    _chunkKey(worldPos) {
+        const wx = Math.floor(worldPos.x * CHUNK_F);
+        const wy = Math.floor(worldPos.y * CHUNK_F);
+        return `${wx,wy}`;
+    }
+
+    setTile(worldPos, tile) {
+        const key = this._chunkKey(worldPos);
+        let chunk = this.chunks.get(key);
+
+        if(!chunk) {
+            chunk = new Chunk(Math.floor(worldPos.x * CHUNK_F), Math.floor(worldPos.x * CHUNK_F));
+            this.chunks.set(key, chunk);
+        }
+
+        const localPos = new Vector(worldPos.x % CHUNK_SIZE, worldPos.y % CHUNK_SIZE);
+        chunk.setTile(localPos, tile);
+    }
+
+    getTile(worldPos) {
+        const key = this._chunkKey(worldPos);
+        this.chunks.get(key);
+
+        if(!chunk) return null;
+    }
+
+    /* _key(pos=Vector.zero) {
         return `${pos.x},${pos.y}`;
     }
 
@@ -50,7 +106,7 @@ class _LoadMap {
                 ctx.fillRect(TileX, TileY, TILE_PX, TILE_PX);
             }
         }
-    }
+    } */
 }
 
 export const LoadMap = new _LoadMap();

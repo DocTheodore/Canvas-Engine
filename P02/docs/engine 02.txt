@@ -1,0 +1,24 @@
+/src
+├── /config             # Arquivos de configuração e variáveis globais
+│   ├── colors.js       # Definições de cores
+│   ├── keymap.js       # Mapeamento de teclas
+│   ├── sys_var.js      # Variáveis globais como TILE_PX, CHUNK_SIZE
+│
+├── /shared             # Funções e classes reutilizáveis
+│   ├── vector.js       # Definição da classe Vector
+│   ├── tile.js         # Classe Tile
+│   ├── camera.js       # Câmera e cálculos de visão
+│
+├── /game               # Lógica do jogo
+│   ├── world.js        # Mapa e chunks (antes 'loadmap.js')
+│   ├── player.js       # Lógica do player
+│   ├── inputHandler.js
+│
+├── /netcode            # Lógica de rede
+│   ├── network.js      # Comunicação com o servidor
+│
+└── /engine             # Parte de baixo nível (câmera, tiles, renderização)
+    ├── tileMap.js      # Nova estrutura de TileMap (com chunks)
+    ├── tileRenderer.js # Responsável pela renderização dos tiles
+    ├── gameLoop.js     # Loop do jogo (separado para organizar melhor)
+    ├── inputHandler.js
